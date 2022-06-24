@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'user can log out', %q{
+feature 'User can log out', %q{
   In order to finish working with application
   As an authenticated user
   I'd like to be able to log out
