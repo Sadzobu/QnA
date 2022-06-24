@@ -2,3 +2,15 @@ h1
   = @question.title
 p
 	= @question.body
+
+div
+  = render @question.answers
+
+div
+  = form_with model: [@question, @answer], local: true do |f|
+    p
+      = f.label :body, 'Add new answer:'
+      br
+      = f.text_area :body
+    p
+      = f.submit 'Answer'
