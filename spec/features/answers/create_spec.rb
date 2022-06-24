@@ -20,10 +20,13 @@ feature 'User can answer question', %q{
 
       expect(page).to have_content 'Test answer'
     end
-
-    scenario 'answers a question with errors'
   end
 
-  scenario 'Unauthenticated user tries to answer a question'
+  scenario 'Unauthenticated user tries to answer a question' do
+    visit question_path(question)
+    click_on 'Answer'
+
+    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+  end
 
 end

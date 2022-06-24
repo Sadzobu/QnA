@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'User can see a list of all questions', %q{
+feature 'User can browse a list of all questions', %q{
   In order to see what questions have been asked
   As a user
   I'd like to be able to see a list of all questions
