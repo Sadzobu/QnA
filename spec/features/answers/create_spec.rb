@@ -18,6 +18,7 @@ feature 'User can answer question', %q{
       fill_in 'answer_body', with: 'Test answer'
       click_on 'Answer'
 
+      expect(page).to have_content 'Your answer successfully created.'
       expect(page).to have_content 'Test answer'
     end
   end

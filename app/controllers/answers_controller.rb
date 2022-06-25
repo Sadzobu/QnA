@@ -3,8 +3,11 @@ class AnswersController < ApplicationController
   before_action :load_question, only: %i[create destroy]
   
   def create
-    @answer = @question.answers.create(answer_params)
-    redirect_to @question
+    @answer = @question.answers.new(answer_params)
+
+    if @answer.save
+      redirect_to @question, notice: 'Your answer successfully created.'
+    end
   end
 
   def destroy
