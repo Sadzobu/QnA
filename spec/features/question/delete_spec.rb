@@ -7,7 +7,7 @@ feature 'User can delete their question', %q{
 } do
 
   given(:user) { create(:user) }
-  given!(:question) { create(:question) }
+  given!(:question) { create(:question, author: user) }
 
   background { sign_in(user) }
 

@@ -20,6 +20,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
+    before { login(user) }
+
     before { get :show, params: { id: question } }
 
     it 'assings the requested question to @question' do
