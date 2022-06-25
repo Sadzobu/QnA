@@ -1,2 +1,5 @@
-p
-  = answer.body
+tr
+  td = answer.body
+  - if current_user and current_user == answer.author
+    td = link_to 'Delete', question_answer_path(@question, answer), method: :delete
+  

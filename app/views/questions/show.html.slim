@@ -3,9 +3,13 @@ h1
 p
 	= @question.body
 
-div
-  h2 Answers:
-  = render @question.answers
+table
+  thead
+    tr
+      th Answers
+      th Action
+  tbody
+    = render @question.answers
 
 div
   = form_with model: [@question, @answer], local: true do |f|

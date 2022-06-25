@@ -2,5 +2,6 @@ tr
   td = question.title
   td = question.body
   td = link_to 'Show', question_path(question)
-  td = link_to 'Delete', question_path(question), method: :delete
+  - if current_user == question.author
+    td = link_to 'Delete', question_path(question), method: :delete
 
