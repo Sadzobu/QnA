@@ -59,8 +59,8 @@ RSpec.describe QuestionsController, type: :controller do
         post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to question_path(assigns(:question))
       end
-
     end
+
     context 'with invalid attributes' do
       it 'does not save the question' do
         expect { post :create, params: { question: attributes_for(:question, :invalid) } }.to_not change(Question, :count)
@@ -71,18 +71,34 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
-
+  
   describe 'DELETE #destroy' do
     before { login(user) }
-    let!(:question) { create(:question) }
 
-    it 'deletes the question' do
-      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+    context 'author tries to delete question' do
+      let!(:question) { create(:question, author: user) }
+
+      it 'deletes the question' do
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirects to index' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
     end
 
-    it 'redirects to index' do
-      delete :destroy, params: { id: question }
-      expect(response).to redirect_to questions_path
+    context 'other user tries to delete question' do
+      let!(:question) { create(:question) }
+
+      it 'does not delete the question' do
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(0)
+      end
+
+      it 'redirect to @question' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to question_path(assigns(:question))
+      end
     end
   end
 
