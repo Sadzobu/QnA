@@ -25,8 +25,12 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    redirect_to @question
+    if current_user.author_of?(@question)
+      @question.destroy 
+      redirect_to questions_path
+    else
+      redirect_to @question, notice: "You can't perform that action"
+    end
   end
 
   private
