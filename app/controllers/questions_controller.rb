@@ -26,7 +26,7 @@ class QuestionsController < ApplicationController
 
   def destroy
     if current_user.author_of?(@question)
-      @question.destroy 
+      @question.destroy
       redirect_to questions_path
     else
       redirect_to @question, notice: "You can't perform that action"

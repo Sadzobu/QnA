@@ -7,6 +7,8 @@ class AnswersController < ApplicationController
 
     if @answer.save
       redirect_to @question, notice: 'Your answer successfully created.'
+    else
+      redirect_to @question, alert: 'Your answer was not created!'
     end
   end
 
