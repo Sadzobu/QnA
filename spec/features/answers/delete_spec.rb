@@ -12,7 +12,7 @@ feature 'User can delete their answer', %q{
 
   background { sign_in(user) }
 
-  scenario 'Authenticated user tries to delete their answer' do
+  scenario 'Authenticated user tries to delete their answer', js: true do
     visit question_path(question)
 
     click_on 'Delete'

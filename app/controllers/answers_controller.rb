@@ -1,25 +1,15 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_question, only: %i[create destroy]
+  before_action :load_question, only: %i[create]
   
   def create
-    @answer = @question.answers.new(answer_params)
-
-    if @answer.save
-      redirect_to @question, notice: 'Your answer successfully created.'
-    else
-      redirect_to @question, alert: 'Your answer was not created!'
-    end
+    @answer = @question.answers.create(answer_params)
   end
 
   def destroy
     @answer = Answer.find(params[:id])
-    if current_user.author_of?(@answer)
-      @answer.destroy
-      redirect_to @question
-    else
-      redirect_to @question, notice: "You can't perform that action"
-    end
+    @question = @answer.question
+    @answer.destroy if current_user.author_of?(@answer)
   end
 
   private
