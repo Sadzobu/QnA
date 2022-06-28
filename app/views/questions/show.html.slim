@@ -3,16 +3,14 @@ h1
 p
 	= @question.body
 
-table
-  thead
-    tr
-      th Answers
-      th Action
-  tbody
-    = render @question.answers
+.answers
+  = render @question.answers
+
+.answer-errors
+  = render 'shared/errors', resource: @answer
 
 div
-  = form_with model: [@question, @answer], local: true do |f|
+  = form_with model: [@question, @answer], class: 'new-answer', local: false do |f|
     p
       = f.label :body, 'Add new answer:'
       br

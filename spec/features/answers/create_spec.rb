@@ -10,7 +10,7 @@ feature 'User can answer question', %q{
   given(:question) { create(:question) }
 
   describe 'Authenticated user' do
-    scenario 'answers a question' do
+    scenario 'answers a question', js: true do
       sign_in(user)
 
       visit question_path(question)
@@ -18,11 +18,13 @@ feature 'User can answer question', %q{
       fill_in 'answer_body', with: 'Test answer'
       click_on 'Answer'
 
-      expect(page).to have_content 'Your answer successfully created.'
-      expect(page).to have_content 'Test answer'
+      expect(current_path).to eq question_path(question)
+      within '.answers' do
+        expect(page).to have_content 'Test answer'
+      end
     end
 
-    scenario 'answers a question with errors' do
+    scenario 'answers a question with errors', js: true do
       sign_in(user)
 
       visit question_path(question)
@@ -33,7 +35,7 @@ feature 'User can answer question', %q{
     end
   end
 
-  scenario 'Unauthenticated user tries to answer a question' do
+  scenario 'Unauthenticated user tries to answer a question', js: true do
     visit question_path(question)
     click_on 'Answer'
 
