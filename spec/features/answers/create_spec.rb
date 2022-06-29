@@ -31,15 +31,14 @@ feature 'User can answer question', %q{
       
       click_on 'Answer'
 
-      expect(page).to have_content 'Your answer was not created!'
+      expect(page).to have_content "Body can't be blank"
     end
   end
 
   scenario 'Unauthenticated user tries to answer a question', js: true do
     visit question_path(question)
-    click_on 'Answer'
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).not_to have_selector '.new_answer'
   end
 
 end
