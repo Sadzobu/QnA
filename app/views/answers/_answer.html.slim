@@ -1,4 +1,14 @@
-p = answer.body
-- if user_signed_in? and current_user.author_of?(answer)
-  p = link_to 'Delete', answer_path(answer), method: :delete, remote: true
+- if answer.persisted? #avoids creating div for new answer from question#show
+  div id=("answer_#{ answer.id }") 
+    => answer.body
+    - if user_signed_in? and current_user.author_of?(answer)
+      => link_to 'Delete', answer_path(answer), method: :delete, remote: true
+      = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+
+      = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+        = f.label :body, 'Your answer'
+        br
+        = f.text_area :body
+        br
+        = f.submit 'Save'
   
