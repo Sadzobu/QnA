@@ -9,8 +9,7 @@ feature 'User can edit their answer', %q{
   given(:user) { create(:user) }
   given(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question, author: user) }
-  given(:other_user) { create(:user) }
-  given!(:other_answer) { create(:answer, body: "Other user answer", question: question, author: other_user) }
+  given!(:other_answer) { create(:answer, body: "Other user answer", question: question) }
 
   describe 'Authenticated user' do
     background { sign_in(user) }
