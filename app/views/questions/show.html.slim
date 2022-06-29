@@ -4,7 +4,9 @@ p
 	= @question.body
 
 .answers
-  = render @question.answers
+  - if @question.best_answer?
+    = render @question.best_answer
+  = render @question.other_answers
 
 .answer-errors
   = render 'shared/errors', resource: @answer
