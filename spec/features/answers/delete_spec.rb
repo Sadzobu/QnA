@@ -16,6 +16,7 @@ feature 'User can delete their answer', %q{
     visit question_path(question)
 
     click_on 'Delete'
+    expect(current_path).to eq question_path(question)
 
     expect(page).to_not have_content answer.body
   end

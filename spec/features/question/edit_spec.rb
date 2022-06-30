@@ -16,10 +16,13 @@ feature 'User can edit their question', %q{
       visit questions_path
 
       click_on 'Edit'
+      expect(current_path).to eq questions_path
+
       within '.questions' do
         fill_in 'Title', with: 'New title'
         fill_in 'Body', with: 'New body'
         click_on 'Save'
+        expect(current_path).to eq questions_path
 
         expect(page).to_not have_content question.title
         expect(page).to_not have_content question.body
