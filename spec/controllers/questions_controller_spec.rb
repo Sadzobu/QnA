@@ -87,7 +87,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
 
-    context 'other user tries to delete question' do
+    context 'user tries to delete other user question' do
       let!(:question) { create(:question) }
 
       it 'does not delete the question' do
@@ -101,4 +101,57 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'PATCH #UPDATE' do
+    before { login(user) }
+
+    let!(:question) { create(:question, author: user) }
+    context 'author tries to update question' do
+      context 'with valid attributes' do
+        it 'assigns requested question to @question' do
+          patch :update, params: { id: question, question: attributes_for(:question), format: :js }
+          expect(assigns(:question)).to eq question
+        end
+
+        it 'changes question attributes' do
+          patch :update, params: { id: question, question: { title: 'Test title', body: 'Test body' }, format: :js }
+          question.reload
+
+          expect(question.title).to eq 'Test title'
+          expect(question.body).to eq 'Test body'
+        end
+
+        it 'renders update template' do
+          patch :update, params: { id: question, question: attributes_for(:question), format: :js }
+
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'does not change question attributes' do
+          patch :update, params: { id: question, question: attributes_for(:question, :invalid), format: :js }
+          question.reload
+
+          expect(question.title).to eq 'MyString'
+          expect(question.body).to eq 'MyText'
+        end
+
+        it 'renders update template' do
+          patch :update, params: { id: question, question: attributes_for(:question, :invalid), format: :js }
+          expect(response).to render_template :update
+        end
+      end
+    end
+
+    let!(:question) { create(:question) }
+    context 'user tries to update other user question' do
+      it 'does not change question attributes' do
+        patch :update, params: { id: question, question: attributes_for(:question), format: :js }
+        question.reload
+
+        expect(question.title).to eq 'MyString'
+        expect(question.body).to eq 'MyText'
+      end
+    end
+  end
 end
