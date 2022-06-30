@@ -17,6 +17,7 @@ feature 'User can answer question', %q{
       
       fill_in 'answer_body', with: 'Test answer'
       click_on 'Answer'
+      expect(current_path).to eq question_path(question)
 
       expect(current_path).to eq question_path(question)
       within '.answers' do
@@ -30,6 +31,7 @@ feature 'User can answer question', %q{
       visit question_path(question)
       
       click_on 'Answer'
+      expect(current_path).to eq question_path(question)
 
       expect(page).to have_content "Body can't be blank"
     end

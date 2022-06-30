@@ -17,10 +17,12 @@ feature 'User can edit their answer', %q{
     scenario 'edits their answer', js: true do
       visit question_path(question)
       click_on 'Edit'
+      expect(current_path).to eq question_path(question)
 
       within '.answers' do
         fill_in 'Your answer', with: 'New body'
         click_on 'Save'
+        expect(current_path).to eq question_path(question)
 
         expect(page).to_not have_content answer.body
         expect(page).to_not have_selector 'textarea'
@@ -33,8 +35,11 @@ feature 'User can edit their answer', %q{
 
       within "#answer_#{answer.id}" do
         click_on 'Edit'
+        expect(current_path).to eq question_path(question)
+
         fill_in 'Your answer', with: ''
         click_on 'Save'
+        expect(current_path).to eq question_path(question)
       end
       
       expect(page).to have_content "Body can't be blank"
