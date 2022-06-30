@@ -1,5 +1,5 @@
 - if answer.persisted? #avoids creating div for new answer from question#show
-  div id=("answer_#{ answer.id }") 
+  div id=("answer_#{ answer.id }") class=(answer.best? ? "best_answer" : "other_answer")
     => answer.body
     - if user_signed_in? and current_user.author_of?(@question)
       => link_to 'Best', mark_as_best_answer_path(answer), method: :patch, remote: true
