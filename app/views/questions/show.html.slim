@@ -4,7 +4,7 @@ p
 	= @question.body
 
 .answers
-  - if @question.best_answer?
+  - if @question.best_answer
     = render @question.best_answer
   = render @question.other_answers
 
