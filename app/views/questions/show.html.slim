@@ -3,11 +3,8 @@ h1
 p
 	= @question.body
 
-- if @question.files.attached?
-  div
-  - @question.files.each do |file|
-    = link_to file.filename.to_s, url_for(file)
-    br
+.attachments
+  = render 'shared/attachments', resource: @question
 
 .answers
   - if @question.best_answer
