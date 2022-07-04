@@ -18,11 +18,7 @@ feature 'User can edit their question', %q{
     scenario 'edits their question without loading any new pages', js: true do
       within "#question_#{question.id}" do
         click_on 'Edit'
-      end
-      
-      expect(current_path).to eq questions_path
-
-      within '.questions' do
+        expect(current_path).to eq questions_path
         fill_in 'Title', with: 'New title'
         fill_in 'Body', with: 'New body'
         click_on 'Save'
