@@ -10,12 +10,16 @@ feature 'User can edit their question', %q{
   given!(:other_question) { create(:question, title: 'Other title', body: 'Other body') }
 
   describe 'Authenticated user' do
-    background { sign_in(user) }
-
-    scenario 'edits their question', js: true do
+    background do
+      sign_in(user)
       visit questions_path
+    end
 
-      click_on 'Edit'
+    scenario 'edits their question without loading any new pages', js: true do
+      within "#question_#{question.id}" do
+        click_on 'Edit'
+      end
+      
       expect(current_path).to eq questions_path
 
       within '.questions' do
@@ -33,10 +37,8 @@ feature 'User can edit their question', %q{
     end
 
     scenario 'tries to edit their question with mistakes', js: true do
-      visit questions_path
-      click_on 'Edit'
-
       within "#question_#{question.id}" do
+        click_on 'Edit'
         fill_in 'Title', with: 'New title'
         fill_in 'Body', with: ''
         click_on 'Save'
@@ -46,10 +48,21 @@ feature 'User can edit their question', %q{
     end
 
     scenario 'tries to edit other user question' do
-      visit questions_path
-
       within "#question_#{question.id}" do
         expect(page).to_not have_selector 'edit-question-link'
+      end
+    end
+
+    scenario 'adds files while edititng question', js: true do
+      within "#question_#{question.id}" do
+        click_on 'Edit'
+        fill_in 'Title', with: 'New title'
+        fill_in 'Body', with: 'New body'
+        attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Save'
+
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
       end
     end
   end
