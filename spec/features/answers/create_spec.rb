@@ -10,15 +10,17 @@ feature 'User can answer question', %q{
   given(:question) { create(:question) }
 
   describe 'Authenticated user' do
-    scenario 'answers a question', js: true do
+    background do
       sign_in(user)
 
       visit question_path(question)
-      
+    end
+
+    scenario 'answers a question', js: true do  
       fill_in 'answer_body', with: 'Test answer'
       click_on 'Answer'
-      expect(current_path).to eq question_path(question)
 
+      expect(current_path).to eq question_path(question)
       expect(current_path).to eq question_path(question)
       within '.answers' do
         expect(page).to have_content 'Test answer'
@@ -26,14 +28,19 @@ feature 'User can answer question', %q{
     end
 
     scenario 'answers a question with errors', js: true do
-      sign_in(user)
-
-      visit question_path(question)
-      
       click_on 'Answer'
-      expect(current_path).to eq question_path(question)
 
+      expect(current_path).to eq question_path(question)
       expect(page).to have_content "Body can't be blank"
+    end
+
+    scenario 'answers a question with attached files', js: true do
+      fill_in 'answer_body', with: 'Test answer'
+      attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      click_on 'Answer'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
     end
   end
 
