@@ -7,11 +7,8 @@
       => link_to 'Delete', answer_path(answer), method: :delete, remote: true
       = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
-    - if answer.files.attached?
-      div
-      - answer.files.each do |file|
-        = link_to file.filename.to_s, url_for(file)
-        br
+    .attachments
+      = render 'shared/attachments', resource: answer
 
     = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
       p
