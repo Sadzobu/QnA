@@ -12,6 +12,11 @@ RSpec.describe AttachmentsController, type: :controller do
       it 'deletes attachment' do
         expect { delete :destroy, params: { id: question.files[0] }, format: :js }.to change(question.files, :count).by(-1)
       end
+
+      it 'render destroy template' do
+        delete :destroy, params: { id: question.files[0] }, format: :js
+        expect(response).to render_template :destroy
+      end
     end
 
     context "user tries to delete other user's resource" do
