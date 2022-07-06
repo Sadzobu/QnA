@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root to: 'questions#index'
 
   resources :attachments, only: %i[destroy]
+  resources :links, only: %i[destroy]
 
   resources :questions, only: %i[index show new create destroy update] do
     resources :answers, shallow: true, only: %i[create destroy update] do
