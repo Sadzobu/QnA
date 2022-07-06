@@ -10,12 +10,14 @@ feature 'User can add links to question', %q{
   given(:gist_url) { 'https://gist.github.com/Sadzobu/a4f6dc257c2b0f00b8204f2c738a0d31' }
   given(:google_url) { 'https://www.google.ru/' }
 
-  scenario 'User adds links when asks question', js: true do
+  background do
     sign_in(user)
     visit new_question_path
-
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'Test body'
+  end
+
+  scenario 'User adds links when asks question', js: true do
     page.all(:fillable_field, 'Link name')[0].set('My gist')
     page.all(:fillable_field, 'Url')[0].set(gist_url)
     click_on 'Add link'
@@ -28,11 +30,6 @@ feature 'User can add links to question', %q{
   end
 
   scenario 'User adds invalid link' do
-    sign_in(user)
-    visit new_question_path
-
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'Test body'
     fill_in 'Link name', with: 'My gist'
     fill_in 'Url', with: 'wrong_url'
     click_on 'Ask'
