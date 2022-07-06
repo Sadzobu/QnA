@@ -6,6 +6,11 @@ p
 .attachments
   = render 'shared/attachments', resource: @question
 
+.links
+  ul
+    -@question.links.each do |link|
+      li= link_to link.name, link.url
+
 .answers
   - if @question.best_answer
     = render @question.best_answer
