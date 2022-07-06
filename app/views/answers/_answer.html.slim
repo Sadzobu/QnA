@@ -7,6 +7,11 @@
       => link_to 'Delete', answer_path(answer), method: :delete, remote: true
       = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
+    .links
+      ul
+        -answer.links.each do |link|
+          li= link_to link.name, link.url
+
     .attachments
       = render 'shared/attachments', resource: answer
 
