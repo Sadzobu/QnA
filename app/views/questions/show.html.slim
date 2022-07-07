@@ -31,8 +31,8 @@ p
       p Links
       p
         = f.fields_for :links do |link|
-          = render 'link_fields', f: link
+          = render 'links/form', f: link
         .add_link
-          = link_to_add_association 'Add link', f, :links
+          = link_to_add_association 'Add link', f, :links, partial: 'links/form'
       p
         = f.submit 'Answer'
