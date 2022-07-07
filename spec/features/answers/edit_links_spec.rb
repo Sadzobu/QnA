@@ -33,6 +33,19 @@ feature 'user can edit links in their answers', %q{
         expect(page).to_not have_link 'Edit'
       end
     end
+
+    scenario 'adds new link to their answer', js: true do
+      within "#answer_#{answer.id}" do
+        click_on 'Edit'
+        click_on 'Add link'
+        page.all(:fillable_field, 'Link name')[1].set('Bing')
+        page.all(:fillable_field, 'Url')[1].set(bing_url)
+        click_on 'Save'
+        expect(page).to have_link answer.links[0].name, href: answer.links[0].url
+        expect(page).to have_link 'Bing', href: bing_url
+      end
+    end
+
   end
 
   scenario 'Unauthenticated user tries to edit link' do
