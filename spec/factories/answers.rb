@@ -16,5 +16,11 @@ FactoryBot.define do
         )
       end
     end
+
+    trait :with_link do
+      after(:build) do |answer|
+        create(:link, linkable: answer)
+      end
+    end
   end
 end
