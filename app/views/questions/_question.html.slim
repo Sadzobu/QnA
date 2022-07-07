@@ -28,7 +28,7 @@ div id=("question_#{ question.id }")
     p Links
     p
       = f.fields_for :links do |link|
-        = render 'link/form', f: link
+        = render 'links/form', f: link
       .add_link
         = link_to_add_association 'Add link', f, :links, partial: 'links/form'
     p
