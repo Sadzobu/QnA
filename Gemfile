@@ -33,6 +33,7 @@ gem 'rubocop', '~> 1.30', '>= 1.30.1'
 gem 'devise'
 gem 'cocoon'
 gem 'aws-sdk-s3', require: false
+gem "octokit", "~> 4.0"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

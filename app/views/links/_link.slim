@@ -1,5 +1,8 @@
 - resource.links.each do |link|
       div id=("link_#{ link.id }")
-            => link_to link.name, link.url
-            - if user_signed_in? and current_user.author_of?(link.linkable)
-                  = link_to 'Delete', link_path(link), method: :delete, remote: true
+        => link_to link.name, link.url
+        - if user_signed_in? and current_user.author_of?(link.linkable)
+          = link_to 'Delete', link_path(link), method: :delete, remote: true
+        - if link.gist?
+          br
+          = link.show_gist
