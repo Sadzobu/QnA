@@ -13,7 +13,7 @@ feature 'User can add links to question', %q{
   background do
     sign_in(user)
     visit new_question_path
-    fill_in 'Title', with: 'Test question'
+    page.all(:fillable_field, 'Title')[0].set('Test question')
     fill_in 'Body', with: 'Test body'
   end
 

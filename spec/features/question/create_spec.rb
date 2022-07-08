@@ -17,7 +17,7 @@ feature 'User can create question', %q{
     end
 
     scenario 'asks a question' do
-      fill_in 'Title', with: 'Test question'
+      page.all(:fillable_field, 'Title')[0].set('Test question')
       fill_in 'Body', with: 'Test body'
       click_on 'Ask'
 
@@ -33,10 +33,10 @@ feature 'User can create question', %q{
     end
 
     scenario 'asks a question with attached file' do
-      fill_in 'Title', with: 'Test question'
+      page.all(:fillable_field, 'Title')[0].set('Test question')
       fill_in 'Body', with: 'Test body'
 
-      attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
       click_on 'Ask'
 
       expect(page).to have_link 'rails_helper.rb'

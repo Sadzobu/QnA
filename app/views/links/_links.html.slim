@@ -1,0 +1,6 @@
+p Links
+.links
+  = f.fields_for :links do |link|
+    = render 'links/form', f: link
+  .add_link
+    = link_to_add_association 'Add link', f, :links, partial: 'links/form'
