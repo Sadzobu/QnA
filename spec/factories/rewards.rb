@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :reward do
     title { 'MyReward' }
     association :question
+    association :user
 
     after :build do |reward|
       reward.file.attach(

@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'pp'
 
 feature 'User can mark answer as best on their question', %q{
   In order to show other users the best answer
@@ -86,7 +85,7 @@ feature 'User can mark answer as best on their question', %q{
       click_on 'Best'
     end
 
-    pp best_answer_user.rewards.last
+    wait_for_ajax
     expect(best_answer_user.rewards.last).to eq question.reward
   end
 end
