@@ -11,7 +11,7 @@
       = render 'links/link', resource: answer
 
     .attachments
-      = render 'shared/attachments', resource: answer
+      = render 'attachments/attachments', resource: answer
 
     = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
       p
