@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'pp'
 
 feature 'User can add reward to question', %q{
   In order to motivate users to give best answers to my question

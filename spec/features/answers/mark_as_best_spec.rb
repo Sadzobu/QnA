@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'pp'
 
 feature 'User can mark answer as best on their question', %q{
   In order to show other users the best answer
@@ -74,4 +75,18 @@ feature 'User can mark answer as best on their question', %q{
     expect(find('.answers', match: :first)).to have_css '.best_answer'
   end
 
+  given(:best_answer_user) { create(:user) }
+  given(:question) { create(:question, :with_reward, author: user) }
+  given!(:answer) { create(:answer, question: question, author: best_answer_user) }
+  scenario 'Best answer author receives reward for that question', js: true do
+    sign_in(user)
+    visit question_path(question)
+
+    within("#answer_#{answer.id}") do
+      click_on 'Best'
+    end
+
+    pp best_answer_user.rewards.last
+    expect(best_answer_user.rewards.last).to eq question.reward
+  end
 end

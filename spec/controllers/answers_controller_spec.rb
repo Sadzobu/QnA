@@ -100,6 +100,8 @@ RSpec.describe AnswersController, type: :controller do
 
     let!(:question) { create(:question, author: user) }
     let!(:answer) { create(:answer, question: question) }
+    let!(:question_with_reward) { create(:question, :with_reward, author: user) }
+    let!(:best_answer) { create(:answer, question: question_with_reward) }
 
     context 'author of question marks it as best' do
       it 'assings the answer.question to @question' do
@@ -112,6 +114,11 @@ RSpec.describe AnswersController, type: :controller do
         answer.reload
 
         expect(answer.best?).to be true
+      end
+
+      it 'gives reward to answer author if it exists' do
+        patch :mark_as_best, params: { id: best_answer }, format: :js
+        expect(best_answer.author.rewards.last).to eq question_with_reward.reward
       end
 
       it 'renders mark_as_best template' do
