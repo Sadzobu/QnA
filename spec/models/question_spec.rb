@@ -1,6 +1,9 @@
 require 'rails_helper'
+require 'models/concerns/voteable_spec'
 
 RSpec.describe Question, type: :model do
+  it_behaves_like 'voteable'
+
   it { should have_many(:answers).dependent(:destroy) }
   it { should belong_to(:best_answer).class_name('Answer').optional }
   it { should have_many(:links).dependent(:destroy) }
