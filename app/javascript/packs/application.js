@@ -11,6 +11,7 @@ import 'jquery'
 import "@nathanvda/cocoon"
 import 'utilities/edit_question'
 import 'utilities/edit_answer'
+import 'utilities/vote'
 
 Rails.start()
 Turbolinks.start()
