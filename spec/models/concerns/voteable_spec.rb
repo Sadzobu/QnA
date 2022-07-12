@@ -4,10 +4,17 @@ shared_examples_for 'voteable' do
   let(:model) { described_class }
   let(:user) { create(:user) }
 
-  it 'calculates rating' do
+  it 'calculates easy rating ' do
     entity = create(model.to_s.underscore.to_sym)
     create_list(:vote, 2, voteable: entity)
     expect(entity.rating).to eq(2)
+  end
+
+  it 'calculates hard rating ' do
+    entity = create(model.to_s.underscore.to_sym)
+    create_list(:vote, 2, voteable: entity)
+    create_list(:vote, 5, :downvote, voteable: entity)
+    expect(entity.rating).to eq(-3)
   end
 
   it 'upvotes' do

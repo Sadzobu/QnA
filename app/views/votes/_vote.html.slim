@@ -1,0 +1,5 @@
+- if user_signed_in? and !current_user.author_of?(resource)
+	span id=("#{resource.class.name.underscore}_#{ resource.id }_vote")
+	  => link_to 'Upvote', polymorphic_path(resource, action: :upvote), method: :post, data: { type: :json }, remote: true
+	  => link_to 'Downvote', polymorphic_path(resource, action: :downvote), method: :post, data: { type: :json }, remote: true
+	  => link_to 'Cancel', polymorphic_path(resource, action: :cancel), method: :delete, data: { type: :json }, remote: true

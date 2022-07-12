@@ -12,6 +12,10 @@ module Voteable
     votes.create(user: user, value: -1) unless voted(user)
   end
 
+  def cancel(user)
+    votes.destroy(Vote.where(user_id: user.id)) if voted(user)
+  end
+
   def rating
     votes.sum(:value)
   end

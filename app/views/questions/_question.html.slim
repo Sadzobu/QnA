@@ -6,6 +6,10 @@ div id=("question_#{ question.id }")
     => link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
     => link_to 'Delete', question_path(question), method: :delete
 
+  span class=('votes')
+    => render 'votes/vote', resource: question
+    => render 'votes/rating', resource: question
+
   - if question.files.attached?
     div
     - question.files.each do |file|  
