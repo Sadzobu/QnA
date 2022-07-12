@@ -10,7 +10,6 @@ feature 'Authenticated user can vote for a question', %q{
   given!(:question) { create(:question) }
   given!(:user_question) { create(:question, author: user) }
 
-
   describe 'Authenticated user' do
     background do
       sign_in(user)

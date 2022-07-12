@@ -2,7 +2,6 @@ module Voted
   extend ActiveSupport::Concern
   included do
     before_action :set_voteable, only: %i[upvote downvote cancel]
-    # after_action :render_json, only: %i[upvote downvote cancel]
   end
 
   def upvote

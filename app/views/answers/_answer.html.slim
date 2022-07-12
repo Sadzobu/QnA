@@ -7,6 +7,10 @@
       => link_to 'Delete', answer_path(answer), method: :delete, remote: true
       = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
+    span class=('votes')
+      => render 'votes/vote', resource: answer
+      => render 'votes/rating', resource: answer
+
     .links
       = render 'links/link', resource: answer
 

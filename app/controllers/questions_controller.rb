@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   include Voted
 
-  before_action :authenticate_user!, except: %i[index show]
+  skip_before_action :authenticate_user!, only: %i[index show]
   before_action :load_question, only: %i[show destroy update]
 
   def index
