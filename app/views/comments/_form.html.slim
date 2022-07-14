@@ -1,8 +1,18 @@
 .new_comment
-  = form_with scope: :comment, url: create_comment_question_path(commentable), local: false do |f|
-    p
-      = f.label :body, 'Comment body'
-      br
-      = f.text_field :body
-    p
-      = f.submit 'Create comment'
+  - if commentable.is_a?(Question)
+    = form_with scope: :comment, url: create_comment_question_path(commentable), local: false do |f|
+      p
+        = f.label :body, 'Comment body'
+        br
+        = f.text_field :body
+      p
+        = f.submit 'Create comment'
+
+  - if commentable.is_a?(Answer)
+    = form_with scope: :comment, url: create_comment_answer_path(commentable), local: false do |f|
+      p
+        = f.label :body, 'Comment body'
+        br
+        = f.text_field :body
+      p
+        = f.submit 'Create comment'

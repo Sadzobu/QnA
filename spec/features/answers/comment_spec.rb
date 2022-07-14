@@ -1,23 +1,24 @@
 require 'rails_helper'
 
-feature 'Authenticated user can leave comments on question', %q{
-  In order to share my thoughts about question
+feature 'Authenticated user can leave comments on answer', %q{
+  In order to share my thoughts about answer
   As an authenticated user
-  I'd like to be able to leave comments on question
+  I'd like to be able to leave comments on answer
 } do
 
   given(:user) { create(:user) }
   given(:question) { create(:question) }
+  given!(:answer) { create(:answer, question: question) }
 
   describe 'Authenticated user' do
-    scenario 'leaves a comment on question', js: true do
+    scenario 'leaves a comment on answer', js: true do
       sign_in(user)
       visit question_path(question)
 
-      within '.question_comments' do
+      within '.answer_comments' do
         fill_in 'Comment body', with: 'New comment'
         click_on 'Create comment'
-      
+
         expect(page).to have_content 'New comment'
       end
     end
@@ -43,7 +44,7 @@ feature 'Authenticated user can leave comments on question', %q{
       end
 
       Capybara.using_session('user') do
-        within '.question_comments' do
+        within '.answer_comments' do
           fill_in 'Comment body', with: 'New comment'
           click_on 'Create comment'
 
@@ -52,7 +53,7 @@ feature 'Authenticated user can leave comments on question', %q{
       end
 
       Capybara.using_session('guest') do
-        within '.question_comments' do
+        within '.answer_comments' do
           expect(page).to have_content 'New comment'
         end
       end

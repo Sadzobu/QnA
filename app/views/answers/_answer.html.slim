@@ -11,11 +11,16 @@
       => render 'votes/vote', resource: answer
       => render 'votes/rating', resource: answer
 
+    .attachments
+      = render 'attachments/attachments', resource: answer
+
     .links
       = render 'links/link', resource: answer
 
-    .attachments
-      = render 'attachments/attachments', resource: answer
+    .answer_comments
+      = render answer.comments
+      - if user_signed_in?
+        = render 'comments/form', commentable: answer
 
     = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
       p

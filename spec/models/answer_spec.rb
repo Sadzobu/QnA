@@ -1,8 +1,10 @@
 require 'rails_helper'
 require 'models/concerns/voteable_spec'
+require 'models/concerns/commentable_spec'
 
 RSpec.describe Answer, type: :model do
   it_behaves_like 'voteable'
+  it_behaves_like 'commentable'
 
   it { should belong_to(:question) }
   it { should have_many(:links).dependent(:destroy) }
@@ -12,6 +14,7 @@ RSpec.describe Answer, type: :model do
   it { should accept_nested_attributes_for :links }
 
   it { should have_many(:votes).dependent(:destroy) }
+  it { should have_many(:comments).dependent(:destroy) }
 
   it 'has many attached files' do
     expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
