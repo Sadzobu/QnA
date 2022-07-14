@@ -9,11 +9,10 @@ p
 .links
   = render 'links/link', resource: @question
 
-.comments
+.question_comments
   = render @question.comments
-
-- if user_signed_in?
-  = render 'comments/form', commentable: @question
+  - if user_signed_in?
+    = render 'comments/form', commentable: @question
   
 .answers
   - if @question.best_answer

@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   resources :rewards, only: %i[index]
 
   resources :questions, concerns: %i[voteable commentable], except: %i[edit] do
-    resources :answers, concerns: %i[voteable], shallow: true, only: %i[create destroy update] do
+    resources :answers, concerns: %i[voteable commentable], shallow: true, only: %i[create destroy update] do
       patch :mark_as_best, on: :member
     end
   end

@@ -6,6 +6,13 @@ consumer.subscriptions.create({ channel: "CommentsChannel", question_id: gon.que
     },
 
     received(data) {
-        $('.answers').append(data);
+        let parsedData = JSON.parse(data)
+        if (parsedData.comment.commentable_type == 'Question') {
+            $('.question_comments').append(parsedData.html_content);  
+        } else {
+            $('#answer_' + parsedData.comment.commentable_id).find('.answer_comments').append(parsedData.html_content);
+        }
+
+        
     }
 });
