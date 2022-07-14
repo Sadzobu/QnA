@@ -9,6 +9,12 @@ p
 .links
   = render 'links/link', resource: @question
 
+.comments
+  = render @question.comments
+
+- if user_signed_in?
+  = render 'comments/form', commentable: @question
+  
 .answers
   - if @question.best_answer
     = render @question.best_answer
@@ -18,21 +24,4 @@ p
   = render 'shared/errors', resource: @answer
 
 - if user_signed_in?
-  div
-    = form_with model: [@question, @answer], class: 'new-answer', local: false do |f|
-      p
-        = f.label :body, 'Add new answer:'
-        br
-        = f.text_area :body
-      p
-        = f.label :files
-        br
-        = f.file_field :files, multiple: true
-      p Links
-      p
-        = f.fields_for :links do |link|
-          = render 'links/form', f: link
-        .add_link
-          = link_to_add_association 'Add link', f, :links, partial: 'links/form'
-      p
-        = f.submit 'Answer'
+  = render 'answers/form', resource: @question
