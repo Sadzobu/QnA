@@ -1,6 +1,7 @@
 class Question < ApplicationRecord
   include Voteable
   include Linkable
+  include Commentable
 
   has_many :answers, dependent: :destroy
   has_one :reward, dependent: :destroy

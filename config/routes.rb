@@ -10,11 +10,17 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :commentable do
+    member do
+      post :create_comment
+    end
+  end
+
   resources :attachments, only: %i[destroy]
   resources :links, only: %i[destroy]
   resources :rewards, only: %i[index]
 
-  resources :questions, concerns: %i[voteable], except: %i[edit] do
+  resources :questions, concerns: %i[voteable commentable], except: %i[edit] do
     resources :answers, concerns: %i[voteable], shallow: true, only: %i[create destroy update] do
       patch :mark_as_best, on: :member
     end

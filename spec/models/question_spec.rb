@@ -1,8 +1,10 @@
 require 'rails_helper'
 require 'models/concerns/voteable_spec'
+require 'models/concerns/commentable_spec'
 
 RSpec.describe Question, type: :model do
   it_behaves_like 'voteable'
+  it_behaves_like 'commentable'
 
   it { should have_many(:answers).dependent(:destroy) }
   it { should belong_to(:best_answer).class_name('Answer').optional }
