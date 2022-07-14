@@ -43,6 +43,34 @@ feature 'User can answer question', %q{
     end
   end
 
+  describe 'Mulitple sessions' do
+    scenario "question appears on another user's page", js: true do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+      end
+ 
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        fill_in 'answer_body', with: 'Test answer'
+        click_on 'Answer'
+
+        within '.answers' do
+          expect(page).to have_content 'Test answer'
+        end
+      end
+
+      Capybara.using_session('guest') do
+        within '.answers' do
+          expect(page).to have_content 'Test answer'
+        end
+      end
+    end
+  end
+
   scenario 'Unauthenticated user tries to answer a question', js: true do
     visit question_path(question)
 

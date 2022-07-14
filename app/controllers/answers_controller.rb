@@ -1,8 +1,10 @@
 class AnswersController < ApplicationController
   include Voted
+  include Commented
   
   before_action :load_question, only: %i[create]
   before_action :load_answer, only: %i[destroy update mark_as_best]
+  after_action :publish_answer, only: %i[create]
   
   def create
     @answer = @question.answers.create(answer_params)
@@ -32,6 +34,18 @@ class AnswersController < ApplicationController
 
   def load_question
     @question = Question.find(params[:question_id])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast(
+      "answers_#{params[:question_id]}",
+      ApplicationController.render(
+        partial: 'answers/canswer',
+        locals: { answer: @answer }
+      )
+    )
   end
 
   def answer_params

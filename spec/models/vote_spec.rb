@@ -5,5 +5,4 @@ RSpec.describe Vote, type: :model do
   it { should belong_to(:voteable) }
 
   it { should validate_presence_of :value }
-  it { should validate_presence_of :user }
 end
