@@ -47,6 +47,7 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.with_attached_files.find(params[:id])
+    gon.push({ question_id: @question.id })
   end
 
   def publish_question
@@ -55,7 +56,7 @@ class QuestionsController < ApplicationController
     ActionCable.server.broadcast(
       'questions',
       ApplicationController.render(
-        partial: 'questions/question',
+        partial: 'questions/cquestion',
         locals: { question: @question }
       )
     )
